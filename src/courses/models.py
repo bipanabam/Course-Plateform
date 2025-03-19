@@ -30,6 +30,8 @@ class Course(models.Model):
         max_length=10, 
         choices=PublishStatus.choices, 
         default=PublishStatus.DRAFT)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     
     @property
     def is_published(self):
@@ -62,4 +64,24 @@ class Course(models.Model):
     
     def __str__(self):
         return self.title
+    
+
+class Lesson(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="lessons")
+    title = models.CharField(max_length=125)
+    description = models.TextField(blank=True, null=True)
+    thumbnail = CloudinaryField("image", blank=True, null=True)
+    video = CloudinaryField("video", blank=True, null=True, resource_type="video")
+    order = models.IntegerField(default=0)
+    can_preview = models.BooleanField(default=False, help_text="If user does not have access to course, "
+    "can they see this?")
+    status = models.CharField(
+        max_length=10, 
+        choices=PublishStatus.choices, 
+        default=PublishStatus.PUBLISHED)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', '-updated']
 
