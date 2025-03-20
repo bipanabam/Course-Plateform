@@ -15,8 +15,8 @@ class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'status', 'access']
     list_filter = ['status', 'access']
     readonly_fields = ['display_image']
-    fields = ['title', 'description', 'status', 'image', 'access', 'display_image']
-    readonly_fields = ['display_image']
+    fields = ['public_id', 'title', 'description', 'status', 'image', 'access', 'display_image']
+    readonly_fields = ['public_id', 'display_image']
 
     def display_image(self, obj,*args, **kwargs):
         url = obj.image_admin_url
