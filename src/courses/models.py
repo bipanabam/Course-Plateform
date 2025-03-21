@@ -27,7 +27,6 @@ def generate_public_id(instance, *args, **kwargs):
     slug = slugify(title)
     unique_id_short = unique_id[:5]
     return f"{slug}-{unique_id_short}"
-      
 
 def get_public_id_prefix(instance, *args, **kwargs):
     if hasattr(instance, 'path'):
@@ -89,31 +88,6 @@ class Course(models.Model):
     @property
     def is_published(self):
         return self.status == PublishStatus.PUBLISHED
-    
-    @property
-    def image_admin_url(self):
-        if not self.image:
-            return ""
-        
-        image_options = {
-            "width": 200
-        }
-        url = self.image.build_url(**image_options)
-        return url
-    
-    def get_image_thumbnail(self, as_html=False):
-        if not self.image:
-            return ""
-        
-        image_options = {
-            "width": 200
-        }
-       
-        if as_html:
-            return self.image.image(**image_options)
-        
-        url = self.image.build_url(**image_options)
-        return url
     
     def __str__(self):
         return self.title
