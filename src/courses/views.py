@@ -6,7 +6,7 @@ from . import services
 def course_list_view(request):
     queryset = services.get_published_courses()
     print(queryset)
-    return JsonResponse({"data":[x.id for x in queryset]})
+    return JsonResponse({"data":[x.path for x in queryset]})
     return render(request, "courses/course_list.html", {})
 
 def course_detail_view(request, course_id=None, *args, **kwargs):
@@ -14,7 +14,7 @@ def course_detail_view(request, course_id=None, *args, **kwargs):
     if course_obj is None:
         raise Http404("Course not found")
     lessons_queryset = course_obj.lessons.all()
-    return JsonResponse({"data": course_obj.title, "lessons": [x.title for x in lessons_queryset]})
+    return JsonResponse({"data": course_obj.title, "lessons": [x.path for x in lessons_queryset]})
     return render(request, "courses/course_detail.html", {})
 
 def lesson_detail_view(request, course_id=None, lesson_id=None, *args, **kwargs):
