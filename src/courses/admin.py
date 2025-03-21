@@ -7,7 +7,7 @@ from django.utils.html import format_html
 # Register your models here.
 class LessonInline(admin.StackedInline):
     model = Lesson
-    readonly_fields = ["public_id", "updated", "display_image"]
+    readonly_fields = ["public_id", "updated", "display_image", "display_video"]
     extra = 0
 
     def display_image(self, obj,*args, **kwargs):
@@ -20,6 +20,17 @@ class LessonInline(admin.StackedInline):
 
     display_image.short_description = 'Current Image'
 
+    def display_video(self, obj,*args, **kwargs):
+        url = helpers.get_cloudinary_video_object(
+            obj,
+            field_name="video",
+            as_html=True,
+            width=550,
+        )
+        return format_html(f"{url}")
+
+    display_video.short_description = 'Current Video'
+
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInline]
@@ -31,7 +42,7 @@ class CourseAdmin(admin.ModelAdmin):
     def display_image(self, obj,*args, **kwargs):
         url = helpers.get_cloudinary_image_object(
             obj,
-            field_name="thumbnail",
+            field_name="image",
             width=200,
         )
         return format_html(f"<img src={url} />")

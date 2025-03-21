@@ -106,6 +106,7 @@ class Lesson(models.Model):
     video = CloudinaryField("video", 
                             public_id_prefix=get_public_id_prefix,
                             display_name = get_display_name,
+                            type="private",
                             tags=['video', 'lesson'],
                             blank=True, null=True, resource_type="video")
     order = models.IntegerField(default=0)
