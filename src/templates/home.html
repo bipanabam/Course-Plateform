@@ -9,5 +9,13 @@
 {% block content %}
 <h1 class="text-3xl font-bold underline">
     Home
-  </h1>
+</h1>
+
+<div>
+  <form method="POST" action=".">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Login</buttom>
+  </form>
+</div>
 {% endblock content %}
