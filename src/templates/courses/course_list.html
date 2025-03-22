@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+<title>Courses</title>
+{% endblock head_title %}
+
+{% block content %}
+
+<h1>Courses</h1>
+{% include "courses/_partials/list-display.html" with queryset=courses %}
+
+{% endblock content %}

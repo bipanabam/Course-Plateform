@@ -82,6 +82,9 @@ class Course(models.Model):
     def path(self):
         return f"/courses/{self.public_id}"
     
+    def get_absolute_url(self):
+        return self.path
+    
     def get_display_name(self):
         return f"{self.title} - Course"
     
@@ -125,14 +128,28 @@ class Lesson(models.Model):
         super().save(*args, **kwargs)
 
     @property
+    def is_coming_soon(self):
+        return self.status == PublishStatus.COMING_SOON
+    
+    @property
+    def has_video(self):
+        return self.video is not None
+
+    @property
     def path(self):
         course_path = self.course.path
         if course_path.endswith("/"):
             course_path = course_path[:-1]
         return f"{course_path}/lessons/{self.public_id}"
     
+    def get_absolute_url(self):
+        return self.path
+    
     def get_display_name(self):
         return f"{self.title} - {self.course.get_display_name()}"
+    
+    def __str__(self):
+        return self.title
 
     class Meta:
         ordering = ['order', '-updated']
