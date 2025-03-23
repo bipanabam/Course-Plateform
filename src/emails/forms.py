@@ -1,5 +1,7 @@
 from django import forms
 
+from . import services, css
+
 from .models import Email
 
 class EmailForm(forms.Form):
@@ -7,7 +9,7 @@ class EmailForm(forms.Form):
         widget=forms.EmailInput(
             attrs={
                 'id': "email-login-input",
-                'class': "",
+                'class': css.form_input_class,
                 'placeholder': "Enter your email"
             }
         )
@@ -18,8 +20,8 @@ class EmailForm(forms.Form):
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        qs = Email.objects.filter(email=email, active=False)
-        if qs.exists():
+        not_verified = services.verify_email(email)
+        if not_verified:
             raise forms.ValidationError("Invalid email. "
             "Please try again.")
         return email

@@ -4,6 +4,8 @@ from django.db import transaction
 from emails.forms import EmailForm
 from emails.models import Email, EmailVerificationEvent
 
+from emails import services
+
 def homepage(request, *args, **kwargs):
     template_name = "home.html"
     print(request.POST)
@@ -14,17 +16,7 @@ def homepage(request, *args, **kwargs):
     }
     if form.is_valid():
         email = form.cleaned_data.get('email')
-        with transaction.atomic():
-            try:
-                email_obj, created = Email.objects.get_or_create(
-                    email=email
-                )
-                obj = EmailVerificationEvent.objects.create(
-                    parent=email_obj,
-                    email=email,
-                )
-            except Exception as e:
-                print(f"Error: {e}")
+        services.start_verification_event(email)
         context['form'] = EmailForm()
         context['message'] = "Success! Check your email for verification."
     else:
