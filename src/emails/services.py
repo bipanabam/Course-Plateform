@@ -54,15 +54,15 @@ def send_verification_email(verify_obj_id,):
 def verify_token(token, max_attempts=5):
     qs = EmailVerificationEvent.objects.filter(token=token)
     if not qs.exists() and not qs.count >= 1:
-        return False, "Token Invalid!"
+        return False, "Token Invalid!", None
     
     has_expired = qs.filter(expired=True)
     if has_expired.exists():
-        return False, "Token Expired! Try again."
+        return False, "Token Expired! Try again.", None
 
     max_attempts_reached = qs.filter(attempts__gte=max_attempts)
     if max_attempts_reached.exists():
-        return False, "Max attempts reached!"
+        return False, "Max attempts reached!", None
     
     obj = qs.first()
     obj.attempts += 1
@@ -71,5 +71,6 @@ def verify_token(token, max_attempts=5):
         obj.expired = True
         obj.expired_at = timezone.now()
     obj.save()    
-    return True, "Success"
+    email_obj = obj.parent
+    return True, "Success", email_obj
     
