@@ -9,7 +9,7 @@
     <title></title>
     {% endblock head_title %}
   </head>
-  <body>
+  <body hx-headers='{"X-CSRFToken": "{{csrf_token}}"}'>
     {% block content %}
     {% endblock content %}
   </body>

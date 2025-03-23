@@ -8,18 +8,4 @@ from emails import services
 
 def homepage(request, *args, **kwargs):
     template_name = "home.html"
-    form = EmailForm(request.POST or None)
-    context = {
-        'form': form,
-        'message': ""
-    }
-    if form.is_valid():
-        email = form.cleaned_data.get('email')
-        services.start_verification_event(email)
-        context['form'] = EmailForm()
-        context['message'] = "Success! Check your email for verification."
-    else:
-        print(form.errors)
-
-    # print(f"Email: {request.session['email_id']}")
-    return render(request, template_name, context)
+    return render(request, template_name)
