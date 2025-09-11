@@ -6,3 +6,4 @@ tzdata==2025.1
 cloudinary
 python-decouple
 django-htmx
+django-tailwind[reload]

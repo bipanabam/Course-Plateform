@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "flowbite/src/themes/default";
+
+:root{
+    --primary-color:  #6D94C5;
+    --secondary-color: #F5EFE6;
+    --button-color:   #CBDCEB;
+    --text-color:     #000000;
+    --background-color: #FFFFFF;
+    --dark-secondary-color: #1F2937;
+    --dark-button-color:   #374151;
+    --dark-text-color:     #FFFFFF;
+    --dark-background-color: #111827;
+}

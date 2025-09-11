@@ -7,7 +7,6 @@ import helpers
 # Create your views here.
 def course_list_view(request):
     queryset = services.get_published_courses()
-    print(queryset)
     # return JsonResponse({"data":[x.path for x in queryset]})
     context = {
         "courses": queryset,

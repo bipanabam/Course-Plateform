@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 
 {% block head_title %}
-<title>
     Course Plateform
-</title>
 {% endblock head_title %}
 
 {% block content %}
-<h1 class="text-3xl font-bold underline">
-    Home
+
+{% if not request.session.email_id %}
+{% comment %} <h1 class="text-3xl font-bold underline mb-3">
+    Haven't signed up yet? Let's get started!
 </h1>
+<button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+     focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
+     text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+<a href="{% url 'signup' %}">Get started</a></button> {% endcomment %}
+{% endif %}
 
-<div hx-get='/login/' hx-trigger='load'>
-
-</div>
 {% endblock content %}

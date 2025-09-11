@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
+
 BASE_URL = config("BASE_URL", default="http://127.0.0.1:8000")
 # default Backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -65,8 +67,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-party app
     'django_htmx',
+    'tailwind',
+    'theme',
+    # local app
     'courses',
     'emails',
+]
+
+# tailwind theme app
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
@@ -157,7 +168,12 @@ MEDIA_ROOT = LOCAL_CDN / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CLoudinary
-
 CLOUDINARY_CLOUD_NAME = config("CLOUDINARY_CLOUD_NAME", default="")
 CLOUDINARY_PUBLIC_API_KEY = config("CLOUDINARY_PUBLIC_API_KEY", default="")
 CLOUDINARY_SECRET_API_KEY = config("CLOUDINARY_SECRET_API_KEY")
+
+
+# tailwind configuration
+if DEBUG:
+    INSTALLED_APPS += ['django_browser_reload']
+    MIDDLEWARE += [ "django_browser_reload.middleware.BrowserReloadMiddleware",]

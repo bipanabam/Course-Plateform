@@ -24,11 +24,12 @@ def logout_hx_view(request):
         if not email_id_in_session:
             return HttpResponseClientRedirect('/')
     return render(request, "emails/hx/logout-btn.html")
-def email_token_login_view(request):
-    if not request.htmx:
-        return redirect("/")
+
+def email_token_signup_view(request):
+    # if not request.htmx:
+    #     return redirect("/")
     email_id_in_session = request.session.get('email_id')
-    template = "emails/hx/email_form.html"
+    template = "emails/signup_form.html"
     
     form = EmailForm(request.POST or None)
     context = {
@@ -37,6 +38,7 @@ def email_token_login_view(request):
         'show_form': not email_id_in_session
     }
     if form.is_valid():
+        print(form)
         email = form.cleaned_data.get('email')
         services.start_verification_event(email)
         context['form'] = EmailForm()
@@ -54,7 +56,7 @@ def verify_email_token_view(request, token):
         except:
             pass
         messages.error(request, msg)
-        return redirect("/login/")
+        return redirect("signup/")
     messages.success(request, "Email verified successfully!")
     request.session['email_id'] = f"{email_obj.id}"
     next_url = request.session.get('next_url') or "/"

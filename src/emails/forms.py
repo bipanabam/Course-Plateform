@@ -22,6 +22,6 @@ class EmailForm(forms.Form):
         email = self.cleaned_data.get('email')
         not_verified = services.verify_email(email)
         if not_verified:
-            raise forms.ValidationError("Invalid email. "
+            raise forms.ValidationError("Invalid email."
             "Please try again.")
         return email
