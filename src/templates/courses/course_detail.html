@@ -1,8 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{course}}</h1>
 
-{% include "courses/_partials/list-display.html" with queryset=lessons %}
+<section class="bg-[--neutral-color] py-12 px-6">
+
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Course Header -->
+    <div class="mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold mb-3">
+        {{ course.title }}
+      </h1>
+
+      <p class="text-[--muted-text] max-w-2xl">
+        {{ course.description }}
+      </p>
+    </div>
+
+    <!-- Lessons -->
+    <div>
+      <h2 class="text-xl font-semibold mb-6 text-[--primary-color]">
+        Course Content
+      </h2>
+
+      {% include "courses/_partials/list-display.html" with queryset=lessons %}
+    </div>
+
+  </div>
+
+</section>
 
 {% endblock content %}

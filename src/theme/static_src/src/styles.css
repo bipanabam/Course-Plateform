@@ -3,14 +3,28 @@
 @tailwind utilities;
 @import "flowbite/src/themes/default";
 
-:root{
-    --primary-color:  #6D94C5;
-    --secondary-color: #F5EFE6;
-    --button-color:   #CBDCEB;
-    --text-color:     #000000;
-    --background-color: #FFFFFF;
-    --dark-secondary-color: #1F2937;
-    --dark-button-color:   #374151;
-    --dark-text-color:     #FFFFFF;
-    --dark-background-color: #111827;
+:root {
+    --primary-color: #BEF264;
+    /* Amber */
+    --secondary-color: #27272A;
+    /* Dark gray */
+    --tertiary-color: #818CF8;
+    /* Gold accent */
+    --neutral-color: #09090B;
+    /* Near black */
+
+    --text-color: #E4E4E7;
+    --muted-text: #A1A1AA;
+}
+
+.btn-primary {
+    @apply bg-[--primary-color] text-black px-4 py-2 rounded-lg font-medium hover:opacity-90;
+}
+
+.card {
+    @apply bg-[--secondary-color] border border-gray-800 rounded-2xl shadow-lg;
+}
+
+.card-hover {
+    @apply hover:border-[--primary-color] transition;
 }
